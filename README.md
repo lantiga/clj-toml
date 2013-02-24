@@ -1,6 +1,6 @@
 # clj-toml
 
-clj-toml is a [TOML](https://github.com/mojombo/toml) parser written in Clojure. TOML is Tom's Obvious, Minimal Language. 
+clj-toml is [TOML](https://github.com/mojombo/toml) for Clojure. TOML is Tom's Obvious, Minimal Language. 
 
 > TOML is like INI, only better (Tom Preston-Werner)
 

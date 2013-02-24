@@ -1,5 +1,5 @@
 (ns clj-toml.core
-  ^{:doc "TOML parser written in Clojure"
+  ^{:doc "TOML for Clojure"
     :author "Luca Antiga"}
   (:use [blancas.kern.core]
         [clj-time.core :only [date-time]]
