@@ -6,6 +6,8 @@ clj-toml is [TOML](https://github.com/mojombo/toml) for Clojure. TOML is Tom's O
 
 clj-toml uses [Kern](https://github.com/blancas/kern) for parsing.
 
+This library supports TOML version [4a6ed3944183e2a0307ad6022b7daf53fb9e7eb0](https://github.com/mojombo/toml/tree/4a6ed3944183e2a0307ad6022b7daf53fb9e7eb0).
+
 ## Usage
 
 Leiningen:
