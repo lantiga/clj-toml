@@ -26,7 +26,10 @@ bar=[1,2,3]")
 
 ## TODO
 
-The parser does not yet raise an error if an array is not homogeneous.
+The parser does not yet raise an error if
+
+* an array is not homogeneous
+* duplicate keys exist
 
 ## License
 
