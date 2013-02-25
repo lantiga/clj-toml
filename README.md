@@ -4,17 +4,27 @@ clj-toml is [TOML](https://github.com/mojombo/toml) for Clojure. TOML is Tom's O
 
 > TOML is like INI, only better (Tom Preston-Werner)
 
-clj-toml uses [Kern](https://github.com/blancas/kern) for parsing.
+clj-toml uses [Kern](https://github.com/blancas/kern) for parsing. Kern does all the heavy lifting, we're just sitting pretty.
 
-This library supports TOML version [4a6ed3944183e2a0307ad6022b7daf53fb9e7eb0](https://github.com/mojombo/toml/tree/4a6ed3944183e2a0307ad6022b7daf53fb9e7eb0).
+clj-toml comes with a decent [collection of tests](https://github.com/lantiga/clj-toml/blob/master/test/clj_toml/core_test.clj).
+
+Supported TOML version: [00f11b019406531c8c7989846b1c1a54e9b8d8bb](https://github.com/mojombo/toml/tree/00f11b019406531c8c7989846b1c1a54e9b8d8bb).
 
 ## Usage
 
 Leiningen:
 
 ```clojure
-[clj-toml "0.1.0"]
+[clj-toml "0.2.0"]
 ```
+
+Test:
+
+```clojure
+lein test
+```
+
+Use:
 
 ```clojure
 (use 'clj-toml.core)
@@ -28,10 +38,15 @@ bar=[1,2,3]")
 
 ## TODO
 
-The parser does not yet raise an error if
+The parser is pretty solid (thanks to Kern) and complete. 
 
-* an array is not homogeneous
-* duplicate keys exist
+In a way it implements a superset of TOML, since it successfully parses
+
+* non-homogeneous arrays
+* TOML with duplicate keys
+* multiline strings
+
+As the TOML specification stabilizes, we'll raise errors according to specification.
 
 ## License
 

@@ -3,6 +3,93 @@
         clj-toml.core
         [clj-time.core :only [date-time]]))
 
+(deftest comment-test
+  (testing "Comments"
+    (is (= (parse-string "#just a comment line
+                          foo = \"bar\" # and one more comment")
+           {"foo" "bar"}))))
+
+(deftest numbers-test
+  (testing "Numbers"
+    (is (= (parse-string "integer = 3
+                          negative_integer = -3
+                          float = 3.0
+                          negative_float = -3.0")
+           {"integer" 3
+            "negative_integer" -3
+            "float" 3.0
+            "negative_float" -3.0}))))
+
+(deftest datetime-test
+  (testing "Datetime"
+    (is (= (parse-string "mydob = 1975-10-03T16:20:00Z # and a comment, just because")
+           {"mydob" (date-time 1975 10 03 16 20 00)}))))
+
+(deftest bool-test
+  (testing "Booleans"
+    (is (= (parse-string "truthy = true
+                          falsy = false")
+           {"truthy" true
+            "falsy" false}))))
+
+(deftest array-test
+  (testing "Arrays"
+    (is (= (parse-string "inline = [1, 2, 3]
+                          multiline = [4, 
+                                       5, 
+                                       -6]
+                          nested = [[7, 8, -9], 
+                                    [\"seven\",
+                                     \"eight\",
+                                     \"negative nine\"]]")
+           {"inline" [1 2 3]
+            "multiline" [4 5 -6]
+            "nested" [[7 8 -9]["seven" "eight" "negative nine"]]}))))
+
+(deftest lonely-keygroup
+  (testing "Lonely keygroups"
+    (is (= (parse-string "[Agroup]
+                          [Bgroup]
+                          [Bgroup.nested]
+                          [Cgroup.nested]")
+           {"Agroup" {}
+            "Bgroup" {"nested" {}}
+            "Cgroup" {"nested" {}}}))))
+
+(deftest standard-keygroup
+  (testing "Standard keygroups"
+    (is (= (parse-string "[Agroup]
+                          first = \"first\"
+                          second = true
+                          third = 3
+                          fourth = 4.0
+                          fifth = [5, -6 ,7]")
+           {"Agroup" {"first" "first"
+                      "second" true
+                      "third" 3
+                      "fourth" 4.0
+                      "fifth" [5 -6 7]}}))))
+
+(deftest nested-keygroup
+  (testing "Nested keygroups"
+    (is (= (parse-string "[Agroup]
+                          first = \"first\"
+                          second = true
+
+                          [Agroup.nested]
+                          third = 3
+                          fourth = 4.0
+
+                          [Bgroup.nested]
+                          fifth = [5, -6 ,7]")
+           {"Agroup" {"first" "first"
+                      "second" true
+                      "nested"
+                      {"third" 3
+                       "fourth" 4.0}}
+            "Bgroup" {"nested"
+                      {"fifth" [5 -6 7]}}}))))
+
 (deftest example-test
   (testing "TOML example"
     (is (= (parse-string (slurp "resources/example.toml"))
@@ -25,4 +112,6 @@
              {"ip" "10.0.0.2"
               "dc" "eqdc10"}}
             "clients"
-            {"data" [["gamma" "delta"] [1 2]]}}))))
+            {"data" [["gamma" "delta"] [1 2]]
+             "hosts" ["alpha" "omega"]}}))))
+
