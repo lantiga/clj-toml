@@ -15,7 +15,7 @@ Supported TOML version: [e41a154be1c9947c31b659afe0ccd98e501a3bd7](https://githu
 Leiningen:
 
 ```clojure
-[clj-toml "0.2.0"]
+[clj-toml "0.2.0-SNAPSHOT"]
 ```
 
 Test:
