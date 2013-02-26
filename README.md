@@ -8,7 +8,7 @@ clj-toml uses [Kern](https://github.com/blancas/kern) for parsing. Kern does all
 
 clj-toml comes with a decent [collection of tests](https://github.com/lantiga/clj-toml/blob/master/test/clj_toml/core_test.clj).
 
-Supported TOML version: [00f11b019406531c8c7989846b1c1a54e9b8d8bb](https://github.com/mojombo/toml/tree/00f11b019406531c8c7989846b1c1a54e9b8d8bb).
+Supported TOML version: [e41a154be1c9947c31b659afe0ccd98e501a3bd7](https://github.com/mojombo/toml/tree/e41a154be1c9947c31b659afe0ccd98e501a3bd7).
 
 ## Usage
 
