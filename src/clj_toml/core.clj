@@ -26,9 +26,6 @@
 (def array
   (brackets (comma-sep (<|> primitive array))))
 
-(def array
-  (brackets (comma-sep (<|> primitive array))))
-
 (def pair
   (bind [f (<?> identifier "key = value")
          _ (sym \=)
