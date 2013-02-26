@@ -20,14 +20,9 @@
 (def primitive
   (<|> datetime-lit dec-lit float-lit string-lit bool-lit))
 
-(declare array)
-
 ;; TODO: check that array is homogeneous, otherwise fail
 (def array
-  (brackets (comma-sep (<|> primitive array))))
-
-(def array
-  (brackets (comma-sep (<|> primitive array))))
+  (brackets (comma-sep (<|> primitive (fwd array)))))
 
 (def pair
   (bind [f (<?> identifier "key = value")
