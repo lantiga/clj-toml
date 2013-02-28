@@ -4,7 +4,8 @@
 
 (def toml-def
   (assoc lex/basic-def
-    :comment-line "#"))
+    :comment-line "#"
+    :identifier-letter (<|> alpha-num (one-of* "~!@#$%^&*()_-=+[]{}\\|;:<>,./?"))))
 
 (def- rec (lex/make-parsers toml-def))
 

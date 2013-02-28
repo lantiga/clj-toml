@@ -1,4 +1,4 @@
-(defproject clj-toml "0.2.0-SNAPSHOT"
+(defproject clj-toml "0.3.0"
   :description "TOML for Clojure"
   :url "https://github.com/lantiga/toml"
   :author "Luca Antiga"

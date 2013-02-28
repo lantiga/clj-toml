@@ -22,10 +22,10 @@
 
 ;; TODO: check that array is homogeneous, otherwise fail
 (def array
-  (brackets (comma-sep (<|> primitive (fwd array)))))
+  (brackets (sep-end-by comma (<|> primitive (fwd array)))))
 
 (def pair
-  (bind [f (<?> identifier "key = value")
+  (bind [f (<?> identifier "key")
          _ (sym \=)
          v (<|> primitive array)]
         (return [f v])))

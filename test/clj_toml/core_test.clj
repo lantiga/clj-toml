@@ -115,3 +115,18 @@
             {"data" [["gamma" "delta"] [1 2]]
              "hosts" ["alpha" "omega"]}}))))
 
+(deftest hard-example-test
+  (testing "TOML hard example"
+    (is (= (parse-string (slurp "resources/hard_example.toml"))
+           {"the"
+            {"hard"
+             {"another_test_string" " Same thing, but with a string #",
+              "test_array2"
+              ["Test #11 ]proved that" "Experiment #9 was a success"],
+              "test_array" ["] " " # "],
+              "bit#"
+              {"what?" "You don't think some user won't do that?",
+               "multi_line_array" ["]"]},
+              "harder_test_string"
+              " And when \"'s are in the string, along with # \""},
+             "test_string" "You'll hate me after this - #"}}))))

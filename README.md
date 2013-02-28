@@ -6,16 +6,16 @@ clj-toml is [TOML](https://github.com/mojombo/toml) for Clojure. TOML is Tom's O
 
 clj-toml uses [Kern](https://github.com/blancas/kern) for parsing. Kern does all the heavy lifting, we're just sitting pretty.
 
-clj-toml comes with a decent [collection of tests](https://github.com/lantiga/clj-toml/blob/master/test/clj_toml/core_test.clj).
+clj-toml comes with a decent [collection of tests](https://github.com/lantiga/clj-toml/blob/master/test/clj_toml/core_test.clj). It successfully parses the TOML [hard example](https://github.com/mojombo/toml/blob/master/tests/hard_example.toml). Easy peasy.
 
-Supported TOML version: [e41a154be1c9947c31b659afe0ccd98e501a3bd7](https://github.com/mojombo/toml/tree/e41a154be1c9947c31b659afe0ccd98e501a3bd7).
+Supported TOML version: [3f4224ecdc4a65fdd28b4fb70d46f4c0bd3700aa](https://github.com/mojombo/toml/tree/3f4224ecdc4a65fdd28b4fb70d46f4c0bd3700aa).
 
 ## Usage
 
 Leiningen:
 
 ```clojure
-[clj-toml "0.2.0"]
+[clj-toml "0.3.0"]
 ```
 
 Test:
