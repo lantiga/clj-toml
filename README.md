@@ -15,7 +15,7 @@ clj-toml is [TOML](https://github.com/mojombo/toml) for Clojure. TOML is Tom's O
   Leiningen:
 
   ```clojure
-  [clj-toml "0.3.0"]
+  [clj-toml "0.3.1"]
   ```
 
   Test:
