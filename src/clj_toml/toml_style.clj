@@ -1,5 +1,6 @@
 (ns clj-toml.toml-style
-  (:use [blancas.kern.core])
+  (:use [blancas.kern.core]
+        [clojure.string :only [join]])
   (:require [blancas.kern.lexer :as lex]))
 
 (def toml-def
