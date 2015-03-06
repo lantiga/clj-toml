@@ -54,6 +54,9 @@
             "multiline" [4 5 -6]
             "nested" [[7 8 -9]["seven" "eight" "negative nine"]]}))))
 
+(comment
+  (parse-string "[A]"))
+
 (deftest lonely-keygroup
   (testing "Lonely keygroups"
     (is (= (parse-string "[Agroup]
