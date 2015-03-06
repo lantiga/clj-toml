@@ -12,12 +12,12 @@ clj-toml is [TOML](https://github.com/mojombo/toml) for Clojure. TOML is Tom's O
 
 ## Usage
 
-  **Note**: work is underway towards the 0.4.0 release. Checkout the source in the meantime. 
+  Work is underway towards a TOML 0.4.0-compliant release. Use the 0.3.2 release (TOML 0.1.0-compliant) in the meantime:
 
   Leiningen:
 
   ```clojure
-  [clj-toml "0.4.0"]
+  [clj-toml "0.3.2"]
   ```
 
   Test:
