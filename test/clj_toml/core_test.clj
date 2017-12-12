@@ -40,7 +40,18 @@
     (is (= (parse-string "integer = +3_0")
            {"integer" 30}))
     (is (= (parse-string "integer = -3_0")
-           {"integer" -30}))))
+           {"integer" -30})))
+  (testing "Integer hexadecimal numbers"
+    (is (= (parse-string "hex = 0x01")
+           {"hex" 1}))
+    (is (= (parse-string "hex = 0xFFFFFF")
+           {"hex" 16777215})))
+  (testing "Integer octal numbers"
+    (is (= (parse-string "octal = 0o755")
+           {"octal" 493})))
+  (testing "Integer binary numbers"
+    (is (= (parse-string "bin = 0b101010")
+           {"bin" 42}))))
 
 (deftest float-test
   (testing "Float point numbers"

@@ -124,26 +124,38 @@
 
   ;; Integer
 
-  integer = integer-core
+  integer = dec-int / hex-int / oct-int / bin-int
 
-  <integer-core> = [ minus / plus ] int
   <minus> = %x2D                       ; -
   <plus> = %x2B                        ; +
 
-  <int> = DIGIT / digit1-9 1*( DIGIT / <underscore> DIGIT )
-  <digit1-9> = %x31-39               ; 1-9
   underscore = %x5F                  ; _
+  <digit1-9> = %x31-39               ; 1-9
+  <digit0-7> = %x30-37               ; 0-7
+  <digit0-1> = %x30-31               ; 0-1
+
+  <hex-prefix> = %x30.78             ; 0x
+  <oct-prefix> = %x30.6f             ; 0o
+  <bin-prefix> = %x30.62             ; 0b
+
+  dec-int = [ minus / plus ] unsigned-dec-int
+  <unsigned-dec-int> = DIGIT / digit1-9 1*( DIGIT / <underscore> DIGIT )
+
+  hex-int = hex-prefix HEXDIG *( HEXDIG / underscore HEXDIG )
+  oct-int = oct-prefix digit0-7 *( digit0-7 / underscore digit0-7 )
+  bin-int = bin-prefix digit0-1 *( digit0-1 / underscore digit0-1 )
 
   ;; Float
 
-  float = integer-core ( exp / frac [ exp ] )
+  float = float-int-part ( exp / frac [ exp ] )
   float =/ special-float
 
+  <float-int-part> = dec-int
   <frac> = decimal-point zero-prefixable-int
   <decimal-point> = %x2E               ; .
   <zero-prefixable-int> = DIGIT *( DIGIT / <underscore> DIGIT )
 
-  <exp> = \"e\" integer-core
+  <exp> = \"e\" float-int-part
 
   <special-float> = [ minus / plus ] ( inf / nan )
   <inf> = %x69.6e.66  ; inf
@@ -267,7 +279,11 @@
                                    [:inline-table k v]
                                    [:keyval k v]))
             :float             (comp convert-float str)
-            :integer           (comp read-string str)
+            :integer           identity
+            :dec-int           (comp read-string str)
+            :hex-int           (comp read-string #(str "16r" %) #(subs % 2) str)
+            :oct-int           (comp read-string #(str "8r" %) #(subs % 2) str)
+            :bin-int           (comp read-string #(str "2r" %) #(subs % 2) str)
             :boolean           convert-boolean
             :offset-date-time  (comp read-instant-timestamp #(replace-first % #" " "T") str)
             :local-date-time   (comp read-instant-timestamp #(replace-first % #" " "T") str)
