@@ -45,7 +45,11 @@
     (is (= (parse-string "hex = 0x01")
            {"hex" 1}))
     (is (= (parse-string "hex = 0xFFFFFF")
-           {"hex" 16777215})))
+           {"hex" 16777215}))
+    (is (= (parse-string "hex = 0xDEADBEEF")
+           {"hex" 3735928559}))
+    (is (= (parse-string "hex = 0xdead_beef")
+           {"hex" 3735928559})))
   (testing "Integer octal numbers"
     (is (= (parse-string "octal = 0o755")
            {"octal" 493})))

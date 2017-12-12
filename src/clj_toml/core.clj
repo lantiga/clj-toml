@@ -141,9 +141,9 @@
   dec-int = [ minus / plus ] unsigned-dec-int
   <unsigned-dec-int> = DIGIT / digit1-9 1*( DIGIT / <underscore> DIGIT )
 
-  hex-int = hex-prefix HEXDIG *( HEXDIG / underscore HEXDIG )
-  oct-int = oct-prefix digit0-7 *( digit0-7 / underscore digit0-7 )
-  bin-int = bin-prefix digit0-1 *( digit0-1 / underscore digit0-1 )
+  hex-int = hex-prefix HEXDIG *( HEXDIG / <underscore> HEXDIG )
+  oct-int = oct-prefix digit0-7 *( digit0-7 / <underscore> digit0-7 )
+  bin-int = bin-prefix digit0-1 *( digit0-1 / <underscore> digit0-1 )
 
   ;; Float
 
