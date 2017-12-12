@@ -23,7 +23,6 @@
                           '' = 2")
            {"" 2}))))
 
-;; TODO: find out a way how to test newlines, tabs and such (evaluated by Clojure)
 (deftest string-test
   (testing "Strings (standard)"
     (is (= (parse-string "str = \"I'm a string. Name Jos\u00E9 Location SF.\"")
@@ -166,55 +165,53 @@
 
 ;; TODO: add tests showing that clj-toml is a superset of TOML
 
-(comment
+(deftest example-test
+  (testing "TOML example"
+    (is (= (parse-string (slurp "resources/example.toml"))
+            {"title" "TOML Example"
+            "owner"
+            {"name" "Tom Preston-Werner"
+              "organization" "GitHub"
+              "bio" "GitHub Cofounder & CEO\\nLikes tater tots and beer."
+              "dob" (read-instant-timestamp "1979-05-27T07:32:00Z")}
+            "database"
+            {"enabled" true,
+              "connection_max" 5000,
+              "server" "192.168.1.1",
+              "ports" [8001 8001 8002]}
+            "servers"
+            {"alpha"
+              {"ip" "10.0.0.1"
+              "dc" "eqdc10"}
+              "beta"
+              {"ip" "10.0.0.2"
+              "dc" "eqdc10"
+              "country" "中国"}}
+            "clients"
+            {"data" [["gamma" "delta"] [1 2]]
+              "hosts" ["alpha" "omega"]}
+            "products"
+            [{"name" "Hammer"
+              "sku" 738594937}
+              {"name" "Nail"
+              "sku" 284758393
+              "color" "gray"}]}))))
 
-  (deftest example-test
-    (testing "TOML example"
-      (is (= (parse-string (slurp "resources/example.toml"))
-             {"title" "TOML Example"
-              "owner"
-              {"name" "Tom Preston-Werner"
-               "organization" "GitHub"
-               "bio" "GitHub Cofounder & CEO\nLikes tater tots and beer."
-               "dob" (read-instant-timestamp "1979-05-27T07:32:00Z")}
-              "database"
-              {"enabled" true,
-               "connection_max" 5000,
-               "server" "192.168.1.1",
-               "ports" [8001 8001 8002]}
-              "servers"
-              {"alpha"
-               {"ip" "10.0.0.1"
-                "dc" "eqdc10"}
-               "beta"
-               {"ip" "10.0.0.2"
-                "dc" "eqdc10"
-                "country" "中国"}}
-              "clients"
-              {"data" [["gamma" "delta"] [1 2]]
-               "hosts" ["alpha" "omega"]}
-              "products"
-              [{"name" "Hammer"
-                "sku" 738594937}
-               {"name" "Nail"
-                "sku" 284758393
-                "color" "gray"}]}))))
-
-  (deftest hard-example-test
-    (testing "TOML hard example"
-      (is (= (parse-string (slurp "resources/hard_example.toml"))
-             {"the"
-              {"hard"
-               {"another_test_string" " Same thing, but with a string #",
-                "test_array2"
-                ["Test #11 ]proved that" "Experiment #9 was a success"],
-                "test_array" ["] " " # "],
-                "bit#"
-                {"what?" "You don't think some user won't do that?",
-                 "multi_line_array" ["]"]},
-                "harder_test_string"
-                " And when \"'s are in the string, along with # \""},
-               "test_string" "You'll hate me after this - #"}})))))
+(deftest hard-example-test
+  (testing "TOML hard example"
+    (is (= (parse-string (slurp "resources/hard_example.toml"))
+            {"the"
+            {"hard"
+              {"another_test_string" " Same thing, but with a string #",
+              "test_array2"
+              ["Test #11 ]proved that" "Experiment #9 was a success"],
+              "test_array" ["] " " # "],
+              "bit#"
+              {"what?" "You don't think some user won't do that?",
+                "multi_line_array" ["]"]},
+              "harder_test_string"
+              " And when \\\"'s are in the string, along with # \\\""},
+              "test_string" "You'll hate me after this - #"}}))))
 
 #_(deftest example-v0.4.0-test
     (testing "TOML 0.4.0 example"
