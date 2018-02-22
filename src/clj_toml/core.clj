@@ -103,7 +103,7 @@
 
   <ml-basic-body> = *( ml-basic-char / ml-newline / ( escape ws ml-newline ) )
   <ml-basic-char> = ml-basic-unescaped / escaped
-  <ml-basic-unescaped> = %x20-5B / %x5D-10FFFF
+  <ml-basic-unescaped> = %x20-5B / %x5D-7E / %x80-10FFFF
 
   ;; Literal String
 
