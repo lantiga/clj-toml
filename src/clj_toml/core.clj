@@ -503,7 +503,9 @@
 
 (defmethod ^:private process :inline-table
   [_ values input]
-  [values (concat (convert-inline-array (first input)) (rest input))])
+  [(merge values
+          (segment-merge {} (convert-inline-array (first input))))
+   (rest input)])
 
 (defmethod ^:private process :std-table
   [_ values input]

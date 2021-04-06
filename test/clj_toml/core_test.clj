@@ -2,7 +2,8 @@
   (:use clojure.test
         [clojure.instant :only [read-instant-timestamp]]
         [java-time :only [local-time]]
-        clj-toml.core))
+        clj-toml.core)
+  (:require [clojure.string :as s]))
 
 (deftest comment-test
   (testing "Comments"
@@ -150,7 +151,15 @@
     (is (= (parse-string "name = {first = \"Tom\", last = \"Preston-Werner\"}")
            {"name" {"first" "Tom" "last" "Preston-Werner"}}))
     (is (= (parse-string "point = {x = 1, y = 1, color = {r = 0, g = 0, b = 0}}")
-           {"point" {"x" 1 "y" 1 "color" {"r" 0 "g" 0 "b" 0}}}))))
+           {"point" {"x" 1 "y" 1 "color" {"r" 0 "g" 0 "b" 0}}}))
+    (is (= (parse-string (s/join "\n" ["[tb_parent]"
+                                       "val = 1"
+                                       "tb_a = {val = 10}"
+                                       "tb_b = {val = 20}"]))
+           {"tb_parent"
+            {"val" 1
+             "tb_a" {"val" 10}
+             "tb_b" {"val" 20}}}))))
 
 (deftest array-of-tables-test
   (testing "Array of Tables"
