@@ -234,7 +234,9 @@
            {"table"
             {"key" "value"
              "subtable" {"key" "another value"}
-             "inline" {"first" "Tom" "last" "Preston-Werner"}}
+             "inline"
+             {"name" {"first" "Tom" "last" "Preston-Werner"}
+              "point" {"x" 1 "y" 2}}}
             "x" {"y" {"z" {"w" {}}}}
             "string"
             {"basic"
@@ -282,9 +284,9 @@
             {"True" true
              "False" false}
             "datetime"
-            {"key1" "1979-05-27T07:32:00Z"
-             "key2" "1979-05-27T00:32:00-07:00"
-             "key3" "1979-05-27T00:32:00.999999-07:00"}
+            {"key1" (read-instant-timestamp "1979-05-27T07:32:00Z")
+             "key2" (read-instant-timestamp "1979-05-27T00:32:00-07:00")
+             "key3" (read-instant-timestamp "1979-05-27T00:32:00.999999-07:00")}
             "array"
             {"key1" [1 2 3]
              "key2" ["red" "yellow" "green"]
@@ -295,7 +297,7 @@
             "products"
             [{"name" "Hammer" "sku" 738594937}
              {}
-             {"name" "Neil" "sku" 284758393 "color" "gray"}]
+             {"name" "Nail" "sku" 284758393 "color" "gray"}]
             "fruit"
             [{"name" "apple"
               "physical" {"color" "red" "shape" "round"}
