@@ -150,7 +150,7 @@
   float = float-int-part ( exp / frac [ exp ] )
   float =/ special-float
 
-  <float-int-part> = dec-int
+  <float-int-part> = [ minus / plus ] unsigned-dec-int
   <frac> = decimal-point zero-prefixable-int
   <decimal-point> = %x2E               ; .
   <zero-prefixable-int> = DIGIT *( DIGIT / <underscore> DIGIT )

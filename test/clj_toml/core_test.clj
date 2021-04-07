@@ -60,6 +60,10 @@
 
 (deftest float-test
   (testing "Float point numbers"
+    (is (= (parse-string "float = 0.3")
+           {"float" 0.3}))
+    (is (= (parse-string "float = -0.3")
+           {"float" -0.3}))
     (is (= (parse-string "float = 3.0")
            {"float" 3.0}))
     (is (= (parse-string "float = -3.0")
