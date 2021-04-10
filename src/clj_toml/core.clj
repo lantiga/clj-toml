@@ -76,7 +76,7 @@
   <basic-char> = basic-unescaped / escaped
   <basic-unescaped> = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFF
 
-  <escaped> = escape escape-seq-char
+  escaped = escape escape-seq-char
 
   <escape> = %x5C                    ; \\
   <escape-seq-char> =   %x22         ; \"    quotation mark  U+0022
@@ -290,6 +290,7 @@
             :local-date        (comp read-instant-timestamp #(replace-first % #" " "T") str)
             :local-time        (comp local-time str)
             :date-time         identity
+            :escaped           (comp read-string #(str "\"" % "\"") str)
             :ml-basic-string   str
             :basic-string      str
             :ml-literal-string str

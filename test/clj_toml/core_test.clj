@@ -27,7 +27,9 @@
 (deftest string-test
   (testing "Strings (standard)"
     (is (= (parse-string "str = \"I'm a string. Name Jos\u00E9 Location SF.\"")
-           {"str" "I'm a string. Name Jos\u00E9 Location SF."})))
+           {"str" "I'm a string. Name Jos\u00E9 Location SF."}))
+    (is (= (parse-string "str = \"I'm a string. Name José Location SF.\"")
+           {"str" "I'm a string. Name José Location SF."})))
   (testing "Strings (literal)"
     (is (= (parse-string "str = 'Comes$as\\is<:>'")
            {"str" "Comes$as\\is<:>"})))
@@ -200,7 +202,7 @@
             "owner"
             {"name" "Tom Preston-Werner"
              "organization" "GitHub"
-             "bio" "GitHub Cofounder & CEO\\nLikes tater tots and beer."
+             "bio" "GitHub Cofounder & CEO\nLikes tater tots and beer."
              "dob" (read-instant-timestamp "1979-05-27T07:32:00Z")}
             "database"
             {"enabled" true,
@@ -238,7 +240,7 @@
               {"what?" "You don't think some user won't do that?",
                "multi_line_array" ["]"]},
               "harder_test_string"
-              " And when \\\"'s are in the string, along with # \\\""},
+              " And when \"'s are in the string, along with # \""},
              "test_string" "You'll hate me after this - #"}}))))
 
 (deftest example-v0.4.0-test
