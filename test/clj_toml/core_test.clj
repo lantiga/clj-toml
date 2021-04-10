@@ -33,8 +33,38 @@
   (testing "Strings (literal)"
     (is (= (parse-string "str = 'Comes$as\\is<:>'")
            {"str" "Comes$as\\is<:>"})))
-  (testing "Strings (multiline)")
-  (testing "Strings (multiline literal)"))
+  (testing "Strings (multiline)"
+    (is (= (parse-string (s/join "\n" ["key1 = \"\"\""
+                                       "Roses are red"
+                                       "Violets are blue\"\"\""]))
+           {"key1" "Roses are red\nViolets are blue"}))
+    (is (= (parse-string (s/join "\n" ["key1 = \"\"\""
+                                       "The quick brown \\"
+                                       ""
+                                       "  fox jumps over \\"
+                                       "    the lazy dog.\"\"\""]))
+           {"key1" "The quick brown fox jumps over the lazy dog."}))
+    (is (= (parse-string (s/join "\n" ["key1 = \"\"\"\\"
+                                       "       The quick brown \\"
+                                       "       fox jumps over \\"
+                                       "       the lazy dog.\\"
+                                       "       \"\"\""]))
+           {"key1" "The quick brown fox jumps over the lazy dog."})))
+  (testing "Strings (multiline literal)"
+    (is (= (parse-string "regex2 = '''I [dw]on't need \\d{2} apples'''")
+           {"regex2" "I [dw]on't need \\d{2} apples"}))
+    (is (= (parse-string (s/join "\n" ["lines = '''"
+                                       "The first newline is"
+                                       "trimmed in raw strings."
+                                       "   All other whitespace"
+                                       "   is preserved."
+                                       "'''"]))
+           {"lines" (s/join "\n" ["The first newline is"
+                                  "trimmed in raw strings."
+                                  "   All other whitespace"
+                                  "   is preserved."
+                                  ""])}))
+    ))
 
 (deftest integer-test
   (testing "Integer numbers"

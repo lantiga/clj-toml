@@ -97,11 +97,12 @@
 
   ;; Multiline Basic String
 
-  ml-basic-string = <ml-basic-string-delim> ml-basic-body <ml-basic-string-delim>
+  ml-basic-string = <ml-basic-string-beg-delim> ml-basic-body <ml-basic-string-end-delim>
 
-  ml-basic-string-delim = 3quotation-mark
+  ml-basic-string-beg-delim = 3quotation-mark 0*1ml-newline
+  ml-basic-string-end-delim = 3quotation-mark
 
-  <ml-basic-body> = *( ml-basic-char / ml-newline / ( escape ws ml-newline ) )
+  <ml-basic-body> = *( ml-basic-char / ml-newline / <( escape 1*99( wschar / ml-newline ) )> ) ; `1*99` is workaround, `1*(...)` is not working.
   <ml-basic-char> = ml-basic-unescaped / escaped
   <ml-basic-unescaped> = %x20-5B / %x5D-7E / %x80-10FFFF
 
@@ -115,9 +116,10 @@
 
   ;; Multiline Literal String
 
-  ml-literal-string = <ml-literal-string-delim> ml-literal-body <ml-literal-string-delim>
+  ml-literal-string = <ml-literal-string-beg-delim> ml-literal-body <ml-literal-string-end-delim>
 
-  ml-literal-string-delim = 3apostrophe
+  ml-literal-string-beg-delim = 3apostrophe 0*1ml-newline
+  ml-literal-string-end-delim = 3apostrophe
 
   <ml-literal-body> = *( ml-literal-char / ml-newline )
   <ml-literal-char> = %x09 / %x20-10FFFF
