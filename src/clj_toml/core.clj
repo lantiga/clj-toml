@@ -71,7 +71,7 @@
 
   basic-string = <quotation-mark> *basic-char <quotation-mark>
 
-  quotation-mark = %x22            ; \"
+  quotation-mark = %x22           ; \"
 
   <basic-char> = basic-unescaped / escaped
   <basic-unescaped> = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFF
@@ -87,8 +87,8 @@
   <escape-seq-char> =/  %x6E         ; n     line feed       U+000A
   <escape-seq-char> =/  %x72         ; r     carriage return U+000D
   <escape-seq-char> =/  %x74         ; t     tab             U+0009
-  <escape-seq-char> =/  %x75 4HEXDIG ; uXXXX                U+XXXX
-  <escape-seq-char> =/  %x55 8HEXDIG ; UXXXXXXXX            U+XXXXXXXX
+  <escape-seq-char> =/  %x75 4HEXDIG ; uXXXX                 U+XXXX
+  <escape-seq-char> =/  %x55 8HEXDIG ; UXXXXXXXX             U+XXXXXXXX
 
   ;; Multiline literals
 
@@ -268,10 +268,10 @@
   (condp = x
     "-inf" Double/NEGATIVE_INFINITY
     "+inf" Double/POSITIVE_INFINITY
-    "inf" Double/POSITIVE_INFINITY
+    "inf"  Double/POSITIVE_INFINITY
     "-nan" Double/NaN
     "+nan" Double/NaN
-    "nan" Double/NaN
+    "nan"  Double/NaN
     (read-string x)))
 
 (def toml-transform
