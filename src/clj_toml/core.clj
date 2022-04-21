@@ -71,12 +71,12 @@
 
   basic-string = <quotation-mark> *basic-char <quotation-mark>
 
-  quotation-mark = %x22            ; \"
+  quotation-mark = %x22           ; \"
 
   <basic-char> = basic-unescaped / escaped
   <basic-unescaped> = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFF
 
-  <escaped> = escape escape-seq-char
+  escaped = escape escape-seq-char
 
   <escape> = %x5C                    ; \\
   <escape-seq-char> =   %x22         ; \"    quotation mark  U+0022
@@ -87,8 +87,8 @@
   <escape-seq-char> =/  %x6E         ; n     line feed       U+000A
   <escape-seq-char> =/  %x72         ; r     carriage return U+000D
   <escape-seq-char> =/  %x74         ; t     tab             U+0009
-  <escape-seq-char> =/  %x75 4HEXDIG ; uXXXX                U+XXXX
-  <escape-seq-char> =/  %x55 8HEXDIG ; UXXXXXXXX            U+XXXXXXXX
+  <escape-seq-char> =/  %x75 4HEXDIG ; uXXXX                 U+XXXX
+  <escape-seq-char> =/  %x55 8HEXDIG ; UXXXXXXXX             U+XXXXXXXX
 
   ;; Multiline literals
 
@@ -97,11 +97,12 @@
 
   ;; Multiline Basic String
 
-  ml-basic-string = <ml-basic-string-delim> ml-basic-body <ml-basic-string-delim>
+  ml-basic-string = <ml-basic-string-beg-delim> ml-basic-body <ml-basic-string-end-delim>
 
-  ml-basic-string-delim = 3quotation-mark
+  ml-basic-string-beg-delim = 3quotation-mark 0*1ml-newline
+  ml-basic-string-end-delim = 3quotation-mark
 
-  <ml-basic-body> = *( ml-basic-char / ml-newline / ( escape ws ml-newline ) )
+  <ml-basic-body> = *( ml-basic-char / ml-newline / <( escape 1*99( wschar / ml-newline ) )> ) ; `1*99` is workaround, `1*(...)` is not working.
   <ml-basic-char> = ml-basic-unescaped / escaped
   <ml-basic-unescaped> = %x20-5B / %x5D-7E / %x80-10FFFF
 
@@ -115,9 +116,10 @@
 
   ;; Multiline Literal String
 
-  ml-literal-string = <ml-literal-string-delim> ml-literal-body <ml-literal-string-delim>
+  ml-literal-string = <ml-literal-string-beg-delim> ml-literal-body <ml-literal-string-end-delim>
 
-  ml-literal-string-delim = 3apostrophe
+  ml-literal-string-beg-delim = 3apostrophe 0*1ml-newline
+  ml-literal-string-end-delim = 3apostrophe
 
   <ml-literal-body> = *( ml-literal-char / ml-newline )
   <ml-literal-char> = %x09 / %x20-10FFFF
@@ -150,7 +152,7 @@
   float = float-int-part ( exp / frac [ exp ] )
   float =/ special-float
 
-  <float-int-part> = dec-int
+  <float-int-part> = [ minus / plus ] unsigned-dec-int
   <frac> = decimal-point zero-prefixable-int
   <decimal-point> = %x2E               ; .
   <zero-prefixable-int> = DIGIT *( DIGIT / <underscore> DIGIT )
@@ -266,10 +268,10 @@
   (condp = x
     "-inf" Double/NEGATIVE_INFINITY
     "+inf" Double/POSITIVE_INFINITY
-    "inf" Double/POSITIVE_INFINITY
+    "inf"  Double/POSITIVE_INFINITY
     "-nan" Double/NaN
     "+nan" Double/NaN
-    "nan" Double/NaN
+    "nan"  Double/NaN
     (read-string x)))
 
 (def toml-transform
@@ -290,6 +292,7 @@
             :local-date        (comp read-instant-timestamp #(replace-first % #" " "T") str)
             :local-time        (comp local-time str)
             :date-time         identity
+            :escaped           (comp read-string #(str "\"" % "\"") str)
             :ml-basic-string   str
             :basic-string      str
             :ml-literal-string str
@@ -503,7 +506,9 @@
 
 (defmethod ^:private process :inline-table
   [_ values input]
-  [values (concat (convert-inline-array (first input)) (rest input))])
+  [(merge values
+          (segment-merge {} (convert-inline-array (first input))))
+   (rest input)])
 
 (defmethod ^:private process :std-table
   [_ values input]
